@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -14,17 +15,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $usuarios = User::all();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        //SIGUIENDO EL TUTORIAL RETORNAMOS DE ESTA MANERA
+        //PERO SE PUEDE RETORNAR UTILIZANDO COLLECTIONS PARA DARLE FORMATO A LA RESPUESTA.
+        return response()->json($usuarios, 200);
     }
 
     /**
@@ -35,7 +30,20 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required | email | unique:users',
+            'password' => 'required | min:8 | confirmed',
+        ]);
+
+        $request['password'] = bcrypt($request->password);
+        $request['verified'] = User::USUARIO_NO_VERIFICADO;
+        $request['admin'] = User::USUARIO_REGULAR;
+        $request['verification_token'] = User::generarVerificationToken();
+
+        $usuario = User::create($request->all());
+
+        return response()->json( ['data' => $usuario], 201 );
     }
 
     /**
@@ -46,18 +54,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
-    }
+        $usuario = User::findOrFail($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return response()->json( ['data' => $usuario], 200 );
     }
 
     /**
