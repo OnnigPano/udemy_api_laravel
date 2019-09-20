@@ -3,7 +3,12 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Database\QueryException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -46,6 +51,38 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof ModelNotFoundException) {
+            $model = class_basename($exception->getModel());
+            return response()->json(['error' => "Instance of $model not found"], 404);
+        }
+
+        if ($exception instanceof NotFoundHttpException) {
+            return response()->json(['error' => 'URL not found'], 404);
+        }
+        
+        if ($exception instanceof MethodNotAllowedHttpException) {
+            return response()->json(['error' => 'Method not allowed'], 405);
+        }
+
+        //Handler para controlar cualquier tipo de exception distinta a las anteriores
+        if ($exception instanceof HttpException) {
+            return response()->json(['error' => $exception->getMessage()], $exception->getStatusCode());
+        }
+
+        //Handler para controlar error al querer eliminar un recurso con alguna relación
+        if ($exception instanceof QueryException) {
+            $codigo = $exception->errorInfo[1];
+
+            if ($codigo == 1451) {
+                return response()->json(['error' => 'Cannot delete or update a parent row: a foreign key constraint fails'], 409);
+            }
+        }    
+        
+        //Si el servidor está en producción, no se muestra el error detallado.
+        if (!config('app.debug')) {
+            return response()->json(['error' => 'Falla inesperada'], 500); 
+        }
+
         return parent::render($request, $exception);
     }
 }

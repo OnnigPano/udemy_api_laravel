@@ -1,0 +1,22 @@
+<?php
+
+namespace App\Scopes;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Scope;
+use Illuminate\Database\Eloquent\Builder;
+
+/*
+    El Scope se utiliza para darle formato a la inyeccion de dependencias
+    De ésta forma no se buscará el modelo solo por id, sino tmb 
+    por la relación transactions.
+    Tambíen para que funcione ésto, hay q declarar la funcion boot en el modelo Seller.
+*/
+
+class Sellers implements Scope
+{
+    public function apply(Builder $builder, Model $model)
+    {
+        $builder->has('products');
+    }
+}
