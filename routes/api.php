@@ -21,7 +21,7 @@ Route::resource('buyers', 'Buyer\BuyerController', ['only' => ['index', 'show']]
 Route::apiResource('categories', 'Category\CategoryController');
 
 //Products
-Route::resource('products', 'Category\CategoryController', ['only' => ['index', 'show']]);
+Route::resource('products', 'Product\ProductController', ['only' => ['index', 'show']]);
 
 //Transactions
 Route::resource('transactions', 'Transaction\TransactionController', ['only' => ['index', 'show']]);
