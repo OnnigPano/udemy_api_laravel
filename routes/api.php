@@ -14,7 +14,6 @@ use Illuminate\Http\Request;
 */
 
 //Buyers
-
 Route::resource('buyers', 'Buyer\BuyerController', ['only' => ['index', 'show']]);
 Route::resource('buyers.transactions', 'Buyer\BuyerTransactionController', ['only' => ['index']]);
 Route::resource('buyers.products', 'Buyer\BuyerProductController', ['only' => ['index']]);
@@ -23,6 +22,10 @@ Route::resource('buyers.categories', 'Buyer\BuyerCategoryController', ['only' =>
 
 //Categories
 Route::apiResource('categories', 'Category\CategoryController');
+Route::resource('categories.products', 'Category\CategoryProductController', ['only' => ['index']]);
+Route::resource('categories.sellers', 'Category\CategorySellerController', ['only' => ['index']]);
+Route::resource('categories.transactions', 'Category\CategoryTransactionController', ['only' => ['index']]);
+Route::resource('categories.buyers', 'Category\CategoryBuyerController', ['only' => ['index']]);
 
 //Products
 Route::resource('products', 'Product\ProductController', ['only' => ['index', 'show']]);
@@ -34,6 +37,10 @@ Route::resource('transactions.sellers', 'Transaction\TransactionSellerController
 
 //Sellers
 Route::resource('sellers', 'Seller\SellerController', ['only' => ['index', 'show']]);
+Route::resource('sellers.transactions', 'Seller\SellerTransactionController', ['only' => ['index']]);
+Route::resource('sellers.categories', 'Seller\SellerCategoryController', ['only' => ['index']]);
+Route::resource('sellers.buyers', 'Seller\SellerCategoryController', ['only' => ['index']]);
+Route::apiResource('sellers.products', 'Seller\SellerProductController', ['except' => ['show']]);
 
 //Users
 Route::apiResource('users', 'User\UserController');

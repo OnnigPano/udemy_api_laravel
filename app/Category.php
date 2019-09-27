@@ -14,6 +14,8 @@ class Category extends Model
 
     protected $fillable = ['name', 'description'];
 
+    protected $hidden = ['pivot']; //oculta el atributo pivot de los resultados
+
     public function products()
     {
         return $this->belongsToMany(Product::class);
