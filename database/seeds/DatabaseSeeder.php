@@ -19,6 +19,14 @@ class DatabaseSeeder extends Seeder
         //SETEA LA DB PARA QUE NO HAYA PROBLEMA CON LAS FOREIGN KEYS AL BORRAR DATOS
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
 
+        //PARA QUE AL CREAR LA TOTALIDAD DE USUARIOS NO SE DISPAREN LOS EVENTOS
+        //SE ENVIARIAN MILES DE MAILS AL CREAR LOS USUARIOS
+        User::flushEventListeners();
+        Product::flushEventListeners();
+        Category::flushEventListeners();
+        Transaction::flushEventListeners();
+
+
         //TRUNCATE ELIMINA LOS REGISTROS DE ESAS TABLAS PARA NO GENERAR PROBLEMAS AL VOLVER A EJECUTAR EL SEED
         User::truncate();
         Category::truncate();
