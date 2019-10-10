@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Product;
 use App\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
+use App\Http\Resources\Product as ProductResource;
 
 class ProductController extends ApiController
 {
@@ -17,7 +18,7 @@ class ProductController extends ApiController
     {
         $products = Product::all();
 
-        return $this->showAll($products);
+        return ProductResource::collection($products);
     }
 
     /**

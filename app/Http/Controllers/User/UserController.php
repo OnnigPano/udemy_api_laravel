@@ -6,7 +6,9 @@ use App\User;
 use App\Mail\UserCreated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Resources\UserCollection;
 use App\Http\Controllers\ApiController;
+use App\Http\Resources\User as UserResource;
 
 class UserController extends ApiController
 {
@@ -17,11 +19,9 @@ class UserController extends ApiController
      */
     public function index()
     {
-        $usuarios = User::all();
-
         //SIGUIENDO EL TUTORIAL RETORNAMOS DE ESTA MANERA
         //PERO SE PUEDE RETORNAR UTILIZANDO COLLECTIONS PARA DARLE FORMATO A LA RESPUESTA.
-        return response()->json($usuarios, 200);
+        return new UserCollection(User::all());
     }
 
     /**
