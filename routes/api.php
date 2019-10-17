@@ -50,3 +50,7 @@ Route::apiResource('sellers.products', 'Seller\SellerProductController', ['excep
 Route::apiResource('users', 'User\UserController');
 Route::get('users/{user}/resend', 'User\UserController@resend')->name('resend');
 Route::get('users/verify/{token}', 'User\UserController@verify')->name('verify');
+
+
+//Route para cambiarle el middleware throttle a /auth/token
+Route::post('oauth/token', '\Laravel\Passport\Http\Controllers\AccessTokenController@issueToken');
