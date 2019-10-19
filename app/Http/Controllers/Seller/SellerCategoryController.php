@@ -11,6 +11,8 @@ class SellerCategoryController extends ApiController
     public function __construct()
     {
         parent::__construct();
+
+        $this->middleware('scope:read-general')->except('index');
     }
     /**
      * Display a listing of the resource.
