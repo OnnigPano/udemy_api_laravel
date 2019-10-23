@@ -31,4 +31,18 @@ trait ApiResponser
     {
         return $this->succesResponse(['data' => $message], $code);
     }
+
+    protected function sortResponse($resourceCollection)
+    {
+        //Recibo un ResourceCollection, lo ordeno por el parametro sort_by,
+        //se ordena por los indices transformados en el método publico de los Collection.
+        if(request()->has('sort_by')){
+
+            $att = request()->sort_by;
+            $sorted = $resourceCollection->sortBy($resourceCollection::originalAttribute($att))->values();
+        }
+
+        return $sorted;
+    }
+
 }

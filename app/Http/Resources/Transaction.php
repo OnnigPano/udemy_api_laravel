@@ -23,5 +23,6 @@ class Transaction extends JsonResource
             'fechaActualizacion' => $this->updated_at,
             'fechaEliminacion' => isset($this->deleted_at) ? (string)$this->deleted_at : null,
         ];
+
     }
 }

@@ -25,10 +25,12 @@ class UserController extends ApiController
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //SIGUIENDO EL TUTORIAL RETORNAMOS DE ESTA MANERA
-        //PERO SE PUEDE RETORNAR UTILIZANDO COLLECTIONS PARA DARLE FORMATO A LA RESPUESTA.
-        return new UserCollection(User::all());
+    {   
+        $users = new UserCollection(User::All());
+
+        $sorted = $this->sortResponse($users);
+     
+        return $sorted;
     }
 
     /**

@@ -22,6 +22,6 @@ class Seller extends JsonResource
             'fechaCreacion' => $this->created_at,
             'fechaActualizacion' => $this->updated_at,
             'fechaEliminacion' => isset($this->deleted_at) ? (string)$this->deleted_at : null,
-        ];
+        ];        
     }
 }
