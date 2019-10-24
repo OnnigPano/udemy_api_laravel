@@ -25,7 +25,7 @@ class ProductCategoryController extends ApiController
     {
         $categories = $product->categories;
 
-        return $this->showAll($categories);
+        return $this->resourceCollection($categories);
     }
 
     /**
@@ -40,7 +40,7 @@ class ProductCategoryController extends ApiController
         //AGREGA AL PRODUCTO UNA CATEGORIA, SI ÉSTA EXISTE NO SE REPITE, NO PISA LAS ANTERIORES Y SE SUMA A LA LISTA
         $product->categories()->syncWithoutDetaching($category->id);
         
-        return $this->showAll($product->categories);
+        return $this->resourceCollection($product->categories);
     }
 
     /**
@@ -60,6 +60,6 @@ class ProductCategoryController extends ApiController
 
         $product->categories()->detach([$category->id]);
 
-        return $this->showAll($product->categories);
+        return $this->resourceCollection($product->categories);
     }
 }

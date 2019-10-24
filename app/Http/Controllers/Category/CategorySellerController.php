@@ -26,6 +26,6 @@ class CategorySellerController extends ApiController
             ->unique()                   //elimino los repetidos
             ->values();                //elimino posiciones vacías por sellers eliminados repetidos
 
-        return $this->showAll($sellers);
+        return $this->resourceCollection($sellers);
     }
 }

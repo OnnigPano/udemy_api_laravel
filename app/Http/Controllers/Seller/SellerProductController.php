@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Auth\AuthenticationException;
+use App\Http\Resources\Product as ProductResource;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class SellerProductController extends ApiController
@@ -30,7 +31,7 @@ class SellerProductController extends ApiController
             
             $products = $seller->products;
 
-            return $this->showAll($products);
+            return $this->resourceCollection($products);
         }
 
         return new AuthenticationException;
@@ -60,7 +61,7 @@ class SellerProductController extends ApiController
 
         $product = Product::create($data);
 
-        return $this->showOne($product);
+        return new ProductResource($product);
     }
 
     /**
@@ -108,7 +109,7 @@ class SellerProductController extends ApiController
 
         $product->save();
 
-        return $this->showOne($product);
+        return new ProductResource($product);
 
     }
 

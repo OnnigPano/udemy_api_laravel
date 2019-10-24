@@ -26,11 +26,9 @@ class UserController extends ApiController
      */
     public function index()
     {   
-        $users = new UserCollection(User::All());
-
-        $sorted = $this->sortResponse($users);
+        $users = User::All();
      
-        return $sorted;
+        return $this->resourceCollection($users);
     }
 
     /**
@@ -67,7 +65,7 @@ class UserController extends ApiController
     {
         $usuario = User::findOrFail($id);
 
-        return response()->json( ['data' => $usuario], 200 );
+        return new UserResource($usuario);
     }
 
     /**
@@ -119,7 +117,7 @@ class UserController extends ApiController
 
         $user->save();
 
-        return response()->json(['data' => $user], 200);
+        return new UserResource($usuario);
     }
 
     /**

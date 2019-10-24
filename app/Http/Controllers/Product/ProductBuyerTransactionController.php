@@ -8,6 +8,7 @@ use App\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\ApiController;
+use App\Http\Resources\Transaction as TransactionResource;
 
 class ProductBuyerTransactionController extends ApiController
 {
@@ -61,7 +62,7 @@ class ProductBuyerTransactionController extends ApiController
                 'product_id' => $product->id
             ]);
 
-            return $this->showOne($transaction, 201);
+            return new TransactionResource($transaction);
         });
     }
 }

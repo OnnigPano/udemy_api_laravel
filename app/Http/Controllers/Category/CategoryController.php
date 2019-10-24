@@ -23,11 +23,9 @@ class CategoryController extends ApiController
      */
     public function index()
     {
-        $categories = new CategoryCollection(Category::all());
+        $categories = Category::all();
 
-        $sortResponse = $this->sortResponse($categories);
-
-        return $sortResponse;
+        return $this->resourceCollection($categories);
     }
 
     /**

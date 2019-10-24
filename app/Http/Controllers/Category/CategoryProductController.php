@@ -21,6 +21,6 @@ class CategoryProductController extends ApiController
     {
         $products = $category->products;
 
-        return $this->showAll($products);
+        return $this->resourceCollection($products);
     }
 }

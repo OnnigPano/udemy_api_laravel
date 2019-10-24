@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Buyer;
 use App\Buyer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
+use App\Http\Resources\Buyer as BuyerResource;
 
 class BuyerController extends ApiController
 {
@@ -24,7 +25,7 @@ class BuyerController extends ApiController
         //::has Filtra los usuarios que tengan una relacion transactions, serian buyers
         $compradores = Buyer::has('transactions')->get();
       
-        return response()->json(['data' => $compradores], 200);
+        return $this->resourceCollection($compradores);
     }
 
     /**
@@ -37,7 +38,7 @@ class BuyerController extends ApiController
     {
         $comprador = Buyer::has('transactions')->findOrFail($id);
 
-        return response()->json(['data' => $comprador], 200);
+        return new BuyerResource($comprador);
     }
 
 }

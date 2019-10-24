@@ -2,8 +2,9 @@
 
 namespace App;
 
-use App\Scopes\SellerScope;
 use App\Product;
+use App\Scopes\SellerScope;
+use App\Http\Resources\SellerCollection;
 
 class Seller extends User
 {
@@ -16,6 +17,8 @@ class Seller extends User
 
     //     static::addGlobalScope(new SellerScope);
     // }
+
+    public $collectionClass = SellerCollection::class;
 
     public function products()
     {

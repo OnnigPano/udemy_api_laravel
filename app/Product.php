@@ -6,6 +6,7 @@ use App\Seller;
 use App\Category;
 use App\Transaction;
 use Illuminate\Database\Eloquent\Model;
+use App\Http\Resources\ProductCollection;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
@@ -20,6 +21,8 @@ class Product extends Model
     protected $fillable = ['name', 'description', 'quantity', 'status', 'image', 'seller_id'];
 
     protected $hidden = ['pivot']; //oculta el atributo pivot de los resultados
+
+    public $collectionClass = ProductCollection::class;
 
     public function estaDisponible()
     {

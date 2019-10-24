@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Seller;
 use App\Seller;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
+use App\Http\Resources\Seller as SellerResource;
 
 class SellerController extends ApiController
 {
@@ -24,7 +25,7 @@ class SellerController extends ApiController
            //::has Filtra los usuarios que tengan una relacion products, serian sellers
            $vendedores = Seller::has('products')->get();
       
-           return response()->json(['data' => $vendedores], 200);
+           return $this->resourceCollection($vendedores);
     }
 
     /**
@@ -37,6 +38,6 @@ class SellerController extends ApiController
     {
         $vendedor = Seller::has('products')->findOrFail($id);
 
-        return response()->json(['data' => $vendedor], 200);
+        return new SellerResource($vendedor);
     }
 }

@@ -29,6 +29,6 @@ class CategoryBuyerController extends ApiController
             ->unique()              //traigo buyers sin repetir
             ->values();              //elimina posiciones vacias
 
-        return $this->showAll($buyers);
+        return $this->resourceCollection($buyers);
     }
 }

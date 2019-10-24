@@ -30,6 +30,6 @@ class BuyerProductController extends ApiController
                           
         //dd($products);
 
-        return $this->showAll($products);
+        return $this->resourceCollection($products);
     }
 }

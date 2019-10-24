@@ -2,8 +2,9 @@
 
 namespace App;
 
-use App\Scopes\BuyerScope;
 use App\Transaction;
+use App\Scopes\BuyerScope;
+use App\Http\Resources\BuyerCollection;
 
 class Buyer extends User
 {
@@ -16,6 +17,7 @@ class Buyer extends User
     //     static::addGlobalScope(new BuyerScope);
     // }
 
+    public $collectionClass = BuyerCollection::class;
 
     public function transactions()
     {

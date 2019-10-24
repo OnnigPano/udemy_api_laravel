@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Support\Str;
 use Laravel\Passport\HasApiTokens;
+use App\Http\Resources\UserCollection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -19,6 +20,8 @@ class User extends Authenticatable
 
     const USUARIO_ADMINISTRADOR = 'true';
     const USUARIO_REGULAR = 'false';
+
+    public $collectionClass = UserCollection::class;
 
     protected $table = 'users';
     protected $dates = ['deleted_at'];

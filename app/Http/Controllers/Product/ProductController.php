@@ -23,7 +23,7 @@ class ProductController extends ApiController
     {
         $products = Product::all();
 
-        return ProductResource::collection($products);
+        return $this->resourceCollection($products);
     }
 
     /**
@@ -34,6 +34,6 @@ class ProductController extends ApiController
      */
     public function show(Product $product)
     {
-        return response()->json(['data' => $product], 200);
+        return new ProductResource($product);
     }
 }

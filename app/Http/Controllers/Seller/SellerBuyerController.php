@@ -29,6 +29,6 @@ class SellerBuyerController extends ApiController
             ->unique()
             ->values();
         
-        return $this->showAll($buyers);    
+        return $this->resourceCollection($buyers);    
     }
 }

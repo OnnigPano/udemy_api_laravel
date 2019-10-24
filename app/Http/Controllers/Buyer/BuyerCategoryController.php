@@ -29,6 +29,6 @@ class BuyerCategoryController extends ApiController
             ->unique('id')
             ->values();
 
-        return $this->showAll($categories);
+        return $this->resourceCollection($categories);
     }
 }

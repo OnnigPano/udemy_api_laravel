@@ -32,17 +32,48 @@ trait ApiResponser
         return $this->succesResponse(['data' => $message], $code);
     }
 
-    protected function sortResponse($resourceCollection)
+    protected function sortResponse(Collection $collection, $collectionClass)
     {
         //Recibo un ResourceCollection, lo ordeno por el parametro sort_by,
         //se ordena por los indices transformados en el método publico de los Collection.
         if(request()->has('sort_by')){
 
             $att = request()->sort_by;
-            $sorted = $resourceCollection->sortBy($resourceCollection::originalAttribute($att))->values();
+            $collection = $collection->sortBy($collectionClass::originalAttribute($att))->values();
         }
 
-        return $sorted;
+        return $collection;
+    }
+
+    protected function filterResponse(Collection $collection, $collectionClass)
+    {
+        foreach (request()->query() as $query => $value) {
+
+            $attribute = $collectionClass::originalAttribute($query);
+
+
+            if (isset($attribute, $query)) {
+                $collection = $collection->where($attribute, $value);
+            }
+        }
+
+        return $collection;
+    }
+    
+
+    protected function resourceCollection(Collection $collection)
+    {
+        if ($collection->isEmpty()) {
+            return $collection;
+        }
+
+        $collectionClass = $collection->first()->collectionClass;
+
+        $collection = $this->sortResponse($collection, $collectionClass);
+        $collection = $this->filterResponse($collection, $collectionClass);
+
+        return new $collectionClass($collection);
+
     }
 
 }

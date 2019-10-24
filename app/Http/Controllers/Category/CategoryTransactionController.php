@@ -26,6 +26,6 @@ class CategoryTransactionController extends ApiController
             ->pluck('transactions')    //filtro solo las transactions
             ->collapse();               //unir los datos en un solo array
         
-        return $this->showAll($transactions);
+        return $this->resourceCollection($transactions);
     }
 }
