@@ -25,6 +25,29 @@ class Product extends JsonResource
             'fechaCreacion' => $this->created_at,
             'fechaActualizacion' => $this->updated_at,
             'fechaEliminacion' => isset($this->deleted_at) ? (string)$this->deleted_at : null,
+
+            'links' => [
+                [
+                    'rel' => 'self',
+                    'href' => route('products.show', $this->id)
+                ],
+                [
+                    'rel' => 'product.buyers',
+                    'href' => route('products.buyers.index', $this->id)
+                ],
+                [
+                    'rel' => 'product.transactions',
+                    'href' => route('products.transactions.index', $this->id)
+                ],
+                [
+                    'rel' => 'product.categories',
+                    'href' => route('products.categories.index', $this->id)
+                ],
+                [
+                    'rel' => 'seller',
+                    'href' => route('sellers.show', $this->seller_id)
+                ]
+            ]
         ];
     }
 }
