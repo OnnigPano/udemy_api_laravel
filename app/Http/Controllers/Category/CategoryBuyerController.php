@@ -19,6 +19,8 @@ class CategoryBuyerController extends ApiController
      */
     public function index(Category $category)
     {
+        $this->allowedAdminAction();
+        
         $buyers = $category->products()
             ->whereHas('transactions')  //traigo los productos que tengas transactions
             ->with('transactions.buyer')  //los traigo con su relación transactions y dentro buyer

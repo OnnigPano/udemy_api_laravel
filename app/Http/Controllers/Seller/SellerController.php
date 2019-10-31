@@ -14,6 +14,7 @@ class SellerController extends ApiController
         parent::__construct();
 
         $this->middleware('scope:read-general')->except('show');
+        $this->middleware('can:view,seller')->only('show');
     }
     /**
      * Display a listing of the resource.
@@ -22,6 +23,8 @@ class SellerController extends ApiController
      */
     public function index()
     {
+        $this->allowedAdminAction();
+        
            //::has Filtra los usuarios que tengan una relacion products, serian sellers
            $vendedores = Seller::has('products')->get();
       

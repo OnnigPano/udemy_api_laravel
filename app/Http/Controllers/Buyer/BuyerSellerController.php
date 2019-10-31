@@ -19,6 +19,7 @@ class BuyerSellerController extends ApiController
      */
     public function index(Buyer $buyer)
     {
+        $this->allowedAdminAction();
         /*
             En este caso lo que hacemos es traer las transactions del buyer
             incluyendo los products y a su vez los sellers (con WITH)

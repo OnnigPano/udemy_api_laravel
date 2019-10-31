@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Database\QueryException;
+use Illuminate\Session\TokenMismatchException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -77,6 +78,10 @@ class Handler extends ExceptionHandler
                 return response()->json(['error' => 'Cannot delete or update a parent row: a foreign key constraint fails'], 409);
             }
         }    
+
+        if ($exception instanceof TokenMismatchException) {
+            return redirect()->back()->withInput($request->input());
+        }
         
         //Si el servidor está en producción, no se muestra el error detallado.
         if (!config('app.debug')) {

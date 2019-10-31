@@ -13,6 +13,8 @@ class BuyerCategoryController extends ApiController
         parent::__construct();
 
         $this->middleware('scope:read-general')->except('index');
+
+        $this->middleware('can:view,buyer')->only('index');
     }
     
     /**
