@@ -145,6 +145,13 @@ class UserController extends ApiController
         return response()->json(null, 200);
     }
 
+    public function me(Request $request)
+    {
+        $user = $request->user();
+
+        return new UserResource($user);
+    }
+
     public function verify($token)
     {
         //Busca a el usuario por el token ingresado, ésto se ejecuta en la Route verify

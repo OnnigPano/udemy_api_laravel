@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use Asm89\Stack\CorsService;
 use Illuminate\Database\QueryException;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -52,6 +53,15 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        $response = $this->handleException($request, $exception);
+        
+        app(CorsService::class)->addActualRequestHeaders($response, $request);
+
+        return $response;
+    }
+
+    public function handleException($request, Exception $exception)
+    {
         if ($exception instanceof ModelNotFoundException) {
             $model = class_basename($exception->getModel());
             return response()->json(['error' => "Instance of $model not found"], 404);
@@ -85,9 +95,9 @@ class Handler extends ExceptionHandler
         
         //Si el servidor está en producción, no se muestra el error detallado.
         if (!config('app.debug')) {
-            return response()->json(['error' => 'Falla inesperada'], 500); 
+            return parent::render($request, $exception);
         }
-
-        return parent::render($request, $exception);
+        
+        return response()->json(['error' => 'Falla inesperada'], 500); 
     }
 }
