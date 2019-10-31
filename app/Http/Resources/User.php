@@ -32,4 +32,20 @@ class User extends JsonResource
             ]
         ];
     }
+
+    public static function transformedAttribute($index)
+    {
+        $attributes = [
+            'id' => 'id',
+            'name' => 'nombre',
+            'email' => 'correo',
+            'verified' => 'esVerificado',
+            'admin' => 'esAdministrador',
+            'created_at' => 'fechaCreacion',
+            'updated_at' => 'fechaActualizacion',
+            'deleted_at' => 'fechaEliminacion',
+    ];
+
+    return isset($attributes[$index]) ? $attributes[$index] : null;
+    }
 }

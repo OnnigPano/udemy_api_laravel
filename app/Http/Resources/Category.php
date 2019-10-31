@@ -46,4 +46,18 @@ class Category extends JsonResource
             ]
         ];
     }
+
+    public static function transformedAttribute($index)
+    {
+        $attributes = [
+                'id' => 'id',
+                'name' => 'titulo',
+                'description' => 'detalles',
+                'created_at' => 'fechaCreacion',
+                'updated_at' => 'fechaActualizacion',
+                'deleted_at' => 'fechaEliminacion',
+        ];
+
+        return isset($attributes[$index]) ? $attributes[$index] : null;
+    }
 }
